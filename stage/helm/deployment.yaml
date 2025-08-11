@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wabank-nodejs-auth
+  namespace: nodejs-dev
+  labels:
+    app: wabank-nodejs-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wabank-nodejs-auth
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: wabank-nodejs-auth
+    spec:
+      containers:
+      - name: wabank-nodejs-auth
+        image: wabankcontainerregistry.azurecr.io/nodejs-authentication-dev:latest
+        env:
+        - name: PG_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: pg-secret-auth-dev
+              key: PG_USERNAME
+        - name: PG_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pg-secret-auth-dev
+              key: PG_PASSWORD
+        - name: PG_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: pg-configmap-auth-dev
+              key: PG_HOST
+        - name: PG_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: pg-configmap-auth-dev
+              key: PG_NAME
+        - name: PG_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: pg-configmap-auth-dev
+              key: PG_PORT
+      imagePullSecrets:
+      - name: acr-secret-auth-dev
