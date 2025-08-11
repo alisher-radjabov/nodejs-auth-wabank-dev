@@ -24,30 +24,30 @@ spec:
       - name: wabank-nodejs-auth
         image: wabankcontainerregistry.azurecr.io/nodejs-authentication-dev:latest
         env:
-        - name: PG_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: pg-secret-auth-dev
-              key: PG_USERNAME
-        - name: PG_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: pg-secret-auth-dev
-              key: PG_PASSWORD
-        - name: PG_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: pg-configmap-auth-dev
-              key: PG_HOST
-        - name: PG_NAME
+        # - name: PG_USERNAME
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: pg-secret-auth-dev
+        #       key: PG_USERNAME
+        # - name: PG_PASSWORD
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: pg-secret-auth-dev
+        #       key: PG_PASSWORD
+        - name: DATABASE_URL
           valueFrom:
             configMapKeyRef:
               name: pg-configmap-auth-dev
-              key: PG_NAME
-        - name: PG_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: pg-configmap-auth-dev
-              key: PG_PORT
+              key: DATABASE_URL
+        # - name: PG_NAME
+        #   valueFrom:
+        #     configMapKeyRef:
+        #       name: pg-configmap-auth-dev
+        #       key: PG_NAME
+        # - name: PG_PORT
+        #   valueFrom:
+        #     configMapKeyRef:
+        #       name: pg-configmap-auth-dev
+        #       key: PG_PORT
       imagePullSecrets:
       - name: acr-secret-auth-dev
