@@ -3,7 +3,7 @@ kind: Service
 metadata:
   labels:
     app: wabank-nodejs-auth
-  name: auth-svc
+  name: authentication-svc
   namespace: nodejs-dev
 spec:
   ports:
