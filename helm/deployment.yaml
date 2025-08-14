@@ -20,34 +20,24 @@ spec:
       labels:
         app: wabank-nodejs-auth
     spec:
-      containers:
-      - name: wabank-nodejs-auth
+      initContainers:
+      - name: prisma-migrate
         image: wabankcontainerregistry.azurecr.io/nodejs-authentication-dev:latest
+        command: ["npx", "prisma", "migrate", "deploy"]
         env:
-        # - name: PG_USERNAME
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: pg-secret-auth-dev
-        #       key: PG_USERNAME
-        # - name: PG_PASSWORD
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: pg-secret-auth-dev
-        #       key: PG_PASSWORD
         - name: DATABASE_URL
           valueFrom:
             configMapKeyRef:
               name: pg-configmap-auth-dev
               key: DATABASE_URL
-        # - name: PG_NAME
-        #   valueFrom:
-        #     configMapKeyRef:
-        #       name: pg-configmap-auth-dev
-        #       key: PG_NAME
-        # - name: PG_PORT
-        #   valueFrom:
-        #     configMapKeyRef:
-        #       name: pg-configmap-auth-dev
-        #       key: PG_PORT
+      containers:
+      - name: wabank-nodejs-auth
+        image: wabankcontainerregistry.azurecr.io/nodejs-authentication-dev:latest
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: pg-configmap-auth-dev
+              key: DATABASE_URL
       imagePullSecrets:
       - name: acr-secret-auth-dev
