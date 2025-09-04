@@ -33,12 +33,12 @@ spec:
         - name: EVENT_GRID_KEY
           valueFrom:
             configMapKeyRef:
-              name: pg-configmap-auth-dev
+              name: pg-secret-auth-dev
               key: EVENT_GRID_KEY
         - name: EVENT_GRID_ENDPOINT
           valueFrom:
             configMapKeyRef:
-              name: pg-secret-auth-dev
+              name: pg-configmap-auth-dev
               key: EVENT_GRID_ENDPOINT
       containers:
       - name: wabank-nodejs-auth
@@ -52,12 +52,12 @@ spec:
         - name: EVENT_GRID_KEY
           valueFrom:
             configMapKeyRef:
-              name: pg-configmap-auth-dev
+              name: pg-secret-auth-dev
               key: EVENT_GRID_KEY
         - name: EVENT_GRID_ENDPOINT
           valueFrom:
             configMapKeyRef:
-              name: pg-secret-auth-dev
+              name: pg-configmap-auth-dev
               key: EVENT_GRID_ENDPOINT
       imagePullSecrets:
       - name: acr-secret-auth-dev
