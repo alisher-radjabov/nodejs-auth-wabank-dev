@@ -4,7 +4,8 @@ metadata:
   name: pg-configmap-auth-stage
   namespace: nodejs-stage
 data:
-  PG_HOST: wabank-postgresql.postgres.database.azure.com
-  PG_NAME: nodejs-auth-stage
-  PG_PORT: "5432"
+  DATABASE_URL: postgresql://postgres:g6K0qd0RSx5xuwK2IeUN@wabank-postgresql.postgres.database.azure.com:5432/nodejs-auth-dev?schema=public
   EVENT_GRID_ENDPOINT: wabank-nodejs-event-grid-ns.uaenorth-1.eventgrid.azure.net
+  # PG_HOST: wabank-postgresql.postgres.database.azure.com
+  # PG_NAME: nodejs-auth-stage
+  # PG_PORT: "5432"
