@@ -30,6 +30,16 @@ spec:
             configMapKeyRef:
               name: pg-configmap-auth-dev
               key: DATABASE_URL
+        - name: EVENT_GRID_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: pg-configmap-auth-dev
+              key: EVENT_GRID_KEY
+        - name: EVENT_GRID_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: pg-secret-aut-dev
+              key: EVENT_GRID_ENDPOINT
       containers:
       - name: wabank-nodejs-auth
         image: wabankcontainerregistry.azurecr.io/nodejs-authentication-dev:latest
