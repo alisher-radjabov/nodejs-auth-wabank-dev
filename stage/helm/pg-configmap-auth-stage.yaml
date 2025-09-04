@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pg-configmap-auth-stage
+  namespace: nodejs-stage
+data:
+  PG_HOST: wabank-postgresql.postgres.database.azure.com
+  PG_NAME: nodejs-stage
+  PG_PORT: "5432"
+  EVENT_GRID_ENDPOINT: wabank-nodejs-event-grid-ns.uaenorth-1.eventgrid.azure.net
