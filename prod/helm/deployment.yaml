@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wabank-nodejs-auth
-  namespace: nodejs-dev
+  namespace: nodejs-prod
   labels:
     app: wabank-nodejs-auth
 spec:
@@ -20,34 +20,44 @@ spec:
       labels:
         app: wabank-nodejs-auth
     spec:
+      initContainers:
+      - name: prisma-migrate
+        image: wabankcontainerregistry.azurecr.io/nodejs-authentication-prod:latest
+        command: ["npx", "prisma", "migrate", "deploy"]
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: pg-configmap-auth-prod
+              key: DATABASE_URL
+        - name: EVENT_GRID_KEY
+          valueFrom:
+            secretKeyRef:
+              name: pg-secret-auth-prod
+              key: EVENT_GRID_KEY
+        - name: EVENT_GRID_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: pg-configmap-auth-prod
+              key: EVENT_GRID_ENDPOINT
       containers:
       - name: wabank-nodejs-auth
-        image: wabankcontainerregistry.azurecr.io/nodejs-authentication-dev:latest
+        image: wabankcontainerregistry.azurecr.io/nodejs-authentication-prod:latest
         env:
-        - name: PG_USERNAME
+        - name: DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: pg-configmap-auth-prod
+              key: DATABASE_URL
+        - name: EVENT_GRID_KEY
           valueFrom:
             secretKeyRef:
-              name: pg-secret-auth-dev
-              key: PG_USERNAME
-        - name: PG_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: pg-secret-auth-dev
-              key: PG_PASSWORD
-        - name: PG_HOST
+              name: pg-secret-auth-prod
+              key: EVENT_GRID_KEY
+        - name: EVENT_GRID_ENDPOINT
           valueFrom:
             configMapKeyRef:
-              name: pg-configmap-auth-dev
-              key: PG_HOST
-        - name: PG_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: pg-configmap-auth-dev
-              key: PG_NAME
-        - name: PG_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: pg-configmap-auth-dev
-              key: PG_PORT
+              name: pg-configmap-auth-prod
+              key: EVENT_GRID_ENDPOINT
       imagePullSecrets:
-      - name: acr-secret-auth-dev
+      - name: acr-secret-auth-prod

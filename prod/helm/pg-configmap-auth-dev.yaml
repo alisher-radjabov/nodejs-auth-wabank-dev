@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: pg-configmap-auth-dev
-  namespace: nodejs-dev
-data:
-  PG_HOST: wabank-postgresql.postgres.database.azure.com
-  PG_NAME: nodejs-dev
-  PG_PORT: "5432"
