@@ -59,5 +59,15 @@ spec:
             configMapKeyRef:
               name: pg-configmap-auth-dev
               key: EVENT_GRID_ENDPOINT
+        - name: REDIS_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: pg-secret-auth-dev
+              key: REDIS_CONNECTION_STRING
+        - name: REDIS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: pg-secret-auth-dev
+              key: REDIS_KEY
       imagePullSecrets:
       - name: acr-secret-auth-dev
